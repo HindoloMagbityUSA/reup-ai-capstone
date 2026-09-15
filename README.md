@@ -1,165 +1,124 @@
-# ReUP AI Image-Information Extraction Layer
+# ReUP — Explainable AI for Construction Material Reuse
 
-This package supports three human-verified listing suggestions from one uploaded image:
+### Turning material images into verified information and transparent environmental estimates.
 
-1. Material type
-2. Component type
-3. Visible condition cue
+Reusable construction materials can retain value long after their first use. Yet companies often lack the information needed to assess them in time: what the material is, which component it belongs to, what condition is visible, and how it compares environmentally with an equivalent new product.
 
-All three trained checkpoints, evaluation outputs, dataset manifests, and demonstration images are included. The large source training datasets are not included in this GitHub copy; restore them locally before running training or dataset-dependent evaluations.
+This capstone develops an **explainable, human-in-the-loop AI framework for ReUP** to address that information gap. It connects computer vision with human verification and a transparent environmental calculation, helping users move from an uploaded image to a structured, traceable screening assessment.
 
-The package also contains a standalone local FastAPI backend for the Tuesday demonstration. It does not require ReUP's current backend and exposes a REST contract that can be connected to ReUP's frontend later.
+## The problem
 
-## Open this folder in VS Code
+Material reuse decisions depend on trustworthy information. In practice, that information is often scattered across photographs, incomplete inventories, and inconsistent records. Identifying a potentially reusable component is only the first step; users also need a credible basis for understanding its environmental implications.
 
-Open the entire cloned `reup-ai-capstone` folder. Do not open only `src`, `data`, or `model`.
+An image prediction alone cannot provide that basis. Models can mistake surface appearance for material identity, confuse components, or express confidence in an incorrect result. Environmental comparisons introduce further questions about quantities, units, factor sources, and lifecycle boundaries.
 
-## Folder structure
+**The project addresses both challenges: extracting useful preliminary information and making the resulting assessment understandable and open to review.**
 
-```text
-reup-ai-capstone/
-├── README.md
-├── requirements.txt
-├── requirements-backend.txt
-├── SETUP_REUP_BACKEND.command
-├── START_REUP_BACKEND.command
-├── START_REUP_DEMO.command
-├── data/
-│   ├── Material-dataset/
-│   ├── HBD/
-│   ├── dacl1k/
-│   ├── component_manifest.csv
-│   ├── condition_manifest.csv
-│   └── a1_a3_factors.json
-├── demo_images/
-├── docs/
-├── model/
-│   ├── best_model.pt
-│   ├── component/best_model.pt
-│   └── condition/best_model.pt
-├── results/
-└── src/
-    ├── api_app.py
-    ├── demo_app.py
-    ├── test_backend.py
-    ├── predict_all.py
-    ├── prepare_hbd.py
-    ├── prepare_dacl1k.py
-    ├── train_task.py
-    └── reup_ai/
+## The solution
+
+The framework gives AI, people, and environmental data distinct roles in one workflow:
+
+1. **Upload a material image.** Three trained vision models suggest material type, component type, and visible condition.
+2. **Review the evidence.** Confidence scores, ranked alternatives, and abstention help communicate uncertainty. Grad-CAM visualizations support inspection of model attention through the project's explanation tools.
+3. **Verify the information.** A person reviews and corrects the suggested fields before proceeding.
+4. **Select a compatible environmental factor.** The verified material and explicit quantity are paired with a governed factor in the matching unit.
+5. **Calculate a traceable estimate.** A deterministic formula produces an equivalent-new-product A1–A3 impact, with the inputs and assumptions available for review.
+
+```mermaid
+flowchart LR
+    A[Material image] --> B[AI suggestions]
+    B --> C[Human review and correction]
+    C --> D[Verified fields and quantity]
+    D --> E[Compatible environmental factor]
+    E --> F[Traceable A1–A3 estimate]
 ```
 
-## One-time setup
+### A transparent calculation
 
-In the VS Code terminal:
+A1–A3 covers the product stages of raw-material supply, transport to manufacturing, and manufacturing. Within that boundary, the demonstration uses:
+
+**Equivalent-new-product impact = verified quantity × compatible A1–A3 factor**
+
+For example, the backend validation reproduced:
+
+**5 m³ of concrete × 288 kg CO₂e/m³ = 1,440 kg CO₂e**
+
+This is a screening estimate using a demonstration factor. It provides a product-stage comparison baseline; actual net savings from reuse also depend on factors such as recovery, transport, processing, and the product being displaced.
+
+## What the project demonstrates
+
+- **Computer vision assistance:** three MobileNetV3-Small transfer-learning models for material, component, and visible-condition suggestions.
+- **Human control:** correctable predictions and mandatory verification before assessment.
+- **Explainability:** confidence information, ranked alternatives, abstention, and Grad-CAM analysis tools.
+- **Governed calculation:** explicit environmental factors, quantity inputs, unit checks, and reproducible arithmetic.
+- **An integrated prototype:** a FastAPI backend and local listing-assistant interface, with a separate Streamlit interface for exploring AI suggestions.
+
+## Evaluation results
+
+The models were evaluated on held-out tests from their respective source datasets.
+
+| Task | Test samples | Accuracy | Macro F1 |
+|---|---:|---:|---:|
+| Material type | 678 images | 97.49% | 97.49% |
+| Component type | 3,269 HBD instances | 61.85% | 55.19% |
+| Visible condition | 219 dacl1k images | 91.78% | 87.20% |
+
+Material and visible-condition recognition showed stronger performance than component recognition. That variation is central to the design: suggestions remain subject to human review, and uncertain outputs can be withheld.
+
+Controlled backend validation reproduced the calculation above and rejected unverified records, incompatible units, malformed images, and low-confidence component output. Detailed evidence is available in [combined model metrics](results/ai_layer_metrics.json), [backend validation results](results/backend_validation.json), and the [dataset and model card](docs/DATASET_AND_MODEL_CARD.md).
+
+These results describe source-dataset performance. They do not establish accuracy on real ReUP marketplace photographs or demonstrate reduced user effort in deployment.
+
+## Scope and next steps
+
+This repository contains the original capstone prototype. Its material classifier covers **brick-and-mortar, concrete, steel, and timber**. Visible-condition suggestions describe image cues; they do not certify structural safety or suitability for reuse.
+
+The contribution is a traceable decision-support workflow connecting uncertain AI observations to verified inputs and reproducible environmental estimates. Product-specific carbon claims require approved, applicable Environmental Product Declaration (EPD) factors and a defensible comparison baseline.
+
+The next step is a limited ReUP pilot with representative marketplace images, approved EPD factors, and measurement of user corrections and review effort.
+
+## Run the demo
+
+Use Python 3.11 or 3.12. From the cloned repository:
 
 ```bash
+git clone https://github.com/SierraValley/reup-ai-capstone.git
+cd reup-ai-capstone
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-backend.txt
+PYTHONPATH=src python -m uvicorn api_app:app --host 127.0.0.1 --port 8000
 ```
 
-Python 3.11 or 3.12 is required. On Windows, activate with `.venv\Scripts\activate`.
+Open **http://127.0.0.1:8000/demo** for the listing assistant or **http://127.0.0.1:8000/docs** for the API documentation. On macOS, the included `SETUP_REUP_BACKEND.command` and `START_REUP_BACKEND.command` provide an alternative launch path.
 
-For the backend-only demonstration on macOS, double-click `SETUP_REUP_BACKEND.command` instead. It installs the smaller `requirements-backend.txt` environment.
-
-## Run the local capstone backend
-
-On macOS, double-click `START_REUP_BACKEND.command`. The terminal starts the backend and opens:
-
-```text
-http://127.0.0.1:8000/demo
-```
-
-The interface demonstrates image analysis, mandatory human verification, governed A1-A3 factor selection, and the deterministic product-stage estimate. Interactive API documentation is available at `http://127.0.0.1:8000/docs`.
-
-Terminal alternative:
+For the Streamlit interface, install `requirements.txt` and run:
 
 ```bash
-source .venv/bin/activate
-PYTHONPATH=src python -m uvicorn api_app:app --host 0.0.0.0 --port 8000
-```
-
-See `docs/BACKEND_API_GUIDE.md` for the endpoint contract and recommended demonstration sequence.
-
-## Run the live interface
-
-On macOS, double-click `START_REUP_DEMO.command`. The first launch may ask macOS for permission to open the file. If that happens, Control-click it, choose **Open**, and confirm.
-
-Alternatively, run it from the VS Code terminal:
-
-```bash
-source .venv/bin/activate
 PYTHONPATH=src streamlit run src/demo_app.py
 ```
 
-The interface accepts an image, displays the three AI suggestions, lets the presenter correct them, and requires an explicit verification checkbox. If a checkpoint is unavailable or confidence is too low, the corresponding field displays `Unable to determine`.
-
-## Run combined command-line inference
+### Verify the backend
 
 ```bash
-PYTHONPATH=src python src/predict_all.py demo_images/concrete.jpg
+PYTHONPATH=src python src/test_backend.py
 ```
 
-## Train component recognition with HBD
+## Explore the repository
 
-After following the HBD instructions in `data/README.md`:
+| Location | Contents |
+|---|---|
+| [`src/`](src/) | Inference, backend, interfaces, training, explanation tools, and tests |
+| [`model/`](model/) | Three trained checkpoints and task-specific evaluation outputs |
+| [`results/`](results/) | Metrics, validation records, and evaluation figures |
+| [`demo_images/`](demo_images/) | Images for exploring the prototype |
+| [`data/`](data/) | Dataset manifests, demonstration factors, and dataset instructions |
+| [`docs/`](docs/) | API guide, model documentation, and dataset attribution |
 
-```bash
-PYTHONPATH=src python src/prepare_hbd.py \
-  --dataset data/HBD \
-  --output data/component_manifest.csv
+The trained models and demo assets are included. Large training datasets and local Python environments are excluded. To reproduce training, follow the [dataset instructions](data/README.md), restore the source datasets, and regenerate manifests as needed for your local paths. See the [backend guide](docs/BACKEND_API_GUIDE.md) for the API workflow and the [dataset notices](docs/DATASET_LICENSES_COMPONENT_AND_CONDITION.md) for source terms.
 
-# Optional but strongly recommended on a CPU-only computer:
-PYTHONPATH=src python src/cache_manifest_crops.py \
-  --manifest data/component_manifest.csv \
-  --output-manifest data/component_manifest_cached.csv \
-  --output-dir data/component_crops
+## About the capstone
 
-PYTHONPATH=src python src/train_task.py \
-  --task component_type \
-  --manifest data/component_manifest_cached.csv \
-  --output-dir model/component
-```
+**An Explainable AI Framework for Environmental Impact Assessment of Reusable Construction Materials**
 
-## Train visible-condition recognition with dacl1k
-
-Restore the dacl1k archive into `data/dacl1k` before running the following commands. Its native `annotations_v1.csv` file supplies the image labels. To regenerate the manifest and retrain the model:
-
-```bash
-PYTHONPATH=src python src/prepare_dacl1k.py \
-  --dataset data/dacl1k \
-  --output data/condition_manifest.csv
-
-PYTHONPATH=src python src/train_task.py \
-  --task visible_condition \
-  --manifest data/condition_manifest.csv \
-  --output-dir model/condition
-```
-
-Each training run saves a checkpoint, metrics, per-image predictions, learning curves, and a confusion matrix in its output folder.
-
-## Current held-out test results
-
-| Model output | Accuracy | Balanced accuracy | Macro F1 |
-|---|---:|---:|---:|
-| Material type | 97.5% | 97.5% | 97.5% |
-| Component type (HBD) | 61.9% | 70.9% | 55.2% |
-| Visible condition (dacl1k) | 91.8% | 86.0% | 87.2% |
-
-The complete material evaluation is in `results/metrics.json`. Detailed component and condition results are in their respective `model` subfolders. A concise combined record is in `results/ai_layer_metrics.json`. These values describe held-out images from the source datasets; they do not guarantee the same performance on ReUP user photographs.
-
-## Verify the package
-
-```bash
-PYTHONPATH=src python src/test_component.py
-PYTHONPATH=src python src/test_multimodel.py
-```
-
-## Model boundaries
-
-The AI outputs are suggestions only. Material and component labels may be wrong when an image is unclear or outside the training distribution. The condition model checks for visible cracking, spalling, efflorescence, rust, and exposed reinforcement, but dacl1k primarily contains reinforced-concrete bridge imagery. It does not establish reuse suitability or provide a structural or safety assessment. Human verification remains mandatory before the three values populate the listing form.
-
-## Repository packaging
-
-This repository is a separate copy of the stable ReUP_AI_Demo_Package 2 capstone. Application code, model files, and evaluation results were copied without changes. The original local demo is preserved. Local Python environments, caches, macOS metadata, and the approximately 8 GB source training datasets are excluded. The dataset directories shown above describe the layout after restoring datasets; they are not bundled here. Dataset manifests retain their original paths and may require regeneration for training on another computer. No new redistribution license is asserted for third-party datasets or model assets.
+Hindolo Magbity · CS 687 Capstone · City University of Seattle · 2026
