@@ -84,7 +84,7 @@ The next step is a limited ReUP pilot with representative marketplace images, ap
 Use Python 3.11 or 3.12. Clone the repository and open the entire `reup-ai-capstone` folder in VS Code, rather than only `src`, `data`, or `model`.
 
 ```bash
-git clone https://github.com/SierraValley/reup-ai-capstone.git
+git clone https://github.com/HindoloMagbityUSA/reup-ai-capstone.git
 cd reup-ai-capstone
 python3.11 -m venv .venv
 source .venv/bin/activate
