@@ -77,32 +77,109 @@ The contribution is a traceable decision-support workflow connecting uncertain A
 
 The next step is a limited ReUP pilot with representative marketplace images, approved EPD factors, and measurement of user corrections and review effort.
 
-## Run the demo
+## Setup and usage
 
-Use Python 3.11 or 3.12. From the cloned repository:
+### One-time setup
+
+Use Python 3.11 or 3.12. Clone the repository and open the entire `reup-ai-capstone` folder in VS Code, rather than only `src`, `data`, or `model`.
 
 ```bash
 git clone https://github.com/SierraValley/reup-ai-capstone.git
 cd reup-ai-capstone
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements-backend.txt
+python -m pip install -r requirements.txt
+```
+
+On Windows, activate the environment with `.venv\Scripts\activate`. The commands below use macOS/Linux shell syntax; in PowerShell, set `$env:PYTHONPATH = "src"` once, then run each command without its `PYTHONPATH=src` prefix.
+
+For the backend alone, install `requirements-backend.txt` instead. On macOS, double-click `SETUP_REUP_BACKEND.command` to set up that smaller environment.
+
+### Run the local capstone backend
+
+With the environment activated:
+
+```bash
 PYTHONPATH=src python -m uvicorn api_app:app --host 127.0.0.1 --port 8000
 ```
 
-Open **http://127.0.0.1:8000/demo** for the listing assistant or **http://127.0.0.1:8000/docs** for the API documentation. On macOS, the included `SETUP_REUP_BACKEND.command` and `START_REUP_BACKEND.command` provide an alternative launch path.
+Open **http://127.0.0.1:8000/demo** for the listing assistant or **http://127.0.0.1:8000/docs** for interactive API documentation. On macOS, double-click `START_REUP_BACKEND.command` as an alternative.
 
-For the Streamlit interface, install `requirements.txt` and run:
+The backend runs independently of ReUP's existing backend. Its interface supports image analysis, mandatory human verification, governed factor selection, and the deterministic A1–A3 estimate. See the [backend guide](docs/BACKEND_API_GUIDE.md) for the endpoint contract and demonstration sequence.
+
+### Run the Streamlit interface
+
+Install the full `requirements.txt` dependencies, activate the environment, and run:
 
 ```bash
 PYTHONPATH=src streamlit run src/demo_app.py
 ```
 
-### Verify the backend
+On macOS, you can also double-click `START_REUP_DEMO.command`. If macOS prompts on first launch, Control-click the file and choose **Open**.
+
+The interface accepts an image, displays the three AI suggestions, allows corrections, and requires an explicit verification checkbox. An unavailable checkpoint or insufficient confidence produces `Unable to determine` for the relevant field.
+
+### Run combined command-line inference
 
 ```bash
+PYTHONPATH=src python src/predict_all.py demo_images/concrete.jpg
+```
+
+## Reproduce training
+
+Install the full `requirements.txt` dependencies and restore the source datasets using the [dataset instructions](data/README.md). The training commands below regenerate manifests for your local dataset paths. They write checkpoints and evaluation outputs into the specified model folders; use a separate working copy if you want to retain the bundled trained models.
+
+### Train component recognition with HBD
+
+After following the HBD instructions in [dataset instructions](data/README.md):
+
+```bash
+PYTHONPATH=src python src/prepare_hbd.py \
+  --dataset data/HBD \
+  --output data/component_manifest.csv
+
+# Optional but strongly recommended on a CPU-only computer:
+PYTHONPATH=src python src/cache_manifest_crops.py \
+  --manifest data/component_manifest.csv \
+  --output-manifest data/component_manifest_cached.csv \
+  --output-dir data/component_crops
+
+PYTHONPATH=src python src/train_task.py \
+  --task component_type \
+  --manifest data/component_manifest_cached.csv \
+  --output-dir model/component
+```
+
+#If you skip crop caching, use `data/component_manifest.csv` instead of `data/component_manifest_cached.csv` in the training command.
+
+### Train visible-condition recognition with dacl1k
+
+Restore the dacl1k archive into `data/dacl1k` before running the following commands. Its native `annotations_v1.csv` file supplies the image labels. To regenerate the manifest and retrain the model:
+
+```bash
+PYTHONPATH=src python src/prepare_dacl1k.py \
+  --dataset data/dacl1k \
+  --output data/condition_manifest.csv
+
+PYTHONPATH=src python src/train_task.py \
+  --task visible_condition \
+  --manifest data/condition_manifest.csv \
+  --output-dir model/condition
+```
+
+Each training run saves a checkpoint, metrics, per-image predictions, learning curves, and a confusion matrix in its output folder.
+
+## Verify the package
+
+With the environment activated, run:
+
+```bash
+PYTHONPATH=src python src/test_component.py
+PYTHONPATH=src python src/test_multimodel.py
 PYTHONPATH=src python src/test_backend.py
 ```
+
+The backend test exercises the demo page, three-model inference, environmental calculation, human-verification gate, unit validation, and invalid-image handling.
 
 ## Explore the repository
 
