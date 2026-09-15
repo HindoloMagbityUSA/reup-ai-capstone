@@ -1,0 +1,36 @@
+{
+  "catalog_version": "2026.08-demo.1",
+  "assessment_boundary": "A1-A3 product stage only",
+  "factors": [
+    {
+      "factor_id": "demo-concrete-a1a3-001",
+      "material_type": "concrete",
+      "component_type": null,
+      "factor_value_kgco2e": 288.0,
+      "denominator_unit": "m3",
+      "lifecycle_modules": "A1-A3",
+      "geographic_scope": "Prototype reference; geography not specified",
+      "source_title": "Environmental Product Declarations (EPD) - Lifecycle Approach (V2)",
+      "source_location": "Section 4.1, page 5",
+      "source_type": "internal_prototype_reference",
+      "status": "approved_for_demo",
+      "product_specific": false,
+      "note": "Illustrative generic factor for the capstone demonstration; not a product-specific certified EPD."
+    },
+    {
+      "factor_id": "demo-steel-a1a3-001",
+      "material_type": "steel",
+      "component_type": null,
+      "factor_value_kgco2e": 1.85,
+      "denominator_unit": "kg",
+      "lifecycle_modules": "A1-A3",
+      "geographic_scope": "Prototype reference; geography not specified",
+      "source_title": "Environmental Product Declarations (EPD) - Lifecycle Approach (V2)",
+      "source_location": "Section 4.1, page 5",
+      "source_type": "internal_prototype_reference",
+      "status": "approved_for_demo",
+      "product_specific": false,
+      "note": "Illustrative generic factor for the capstone demonstration; not a product-specific certified EPD."
+    }
+  ]
+}

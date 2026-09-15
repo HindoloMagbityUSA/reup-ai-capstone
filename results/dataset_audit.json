@@ -1,0 +1,123 @@
+{
+  "dataset_root": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset",
+  "classes": [
+    "brick_and_mortar",
+    "concrete",
+    "steel",
+    "timber"
+  ],
+  "records_before_deduplication": 4529,
+  "records_after_deduplication": 4523,
+  "counts_before": {
+    "train": {
+      "brick_and_mortar": 785,
+      "concrete": 729,
+      "steel": 784,
+      "timber": 872
+    },
+    "val": {
+      "brick_and_mortar": 160,
+      "concrete": 181,
+      "steel": 163,
+      "timber": 175
+    },
+    "test": {
+      "brick_and_mortar": 157,
+      "concrete": 166,
+      "steel": 169,
+      "timber": 188
+    }
+  },
+  "counts_after": {
+    "train": {
+      "brick_and_mortar": 785,
+      "concrete": 729,
+      "steel": 782,
+      "timber": 872
+    },
+    "val": {
+      "brick_and_mortar": 160,
+      "concrete": 180,
+      "steel": 162,
+      "timber": 175
+    },
+    "test": {
+      "brick_and_mortar": 157,
+      "concrete": 165,
+      "steel": 168,
+      "timber": 188
+    }
+  },
+  "exact_duplicate_groups": 6,
+  "cross_split_duplicate_groups": 3,
+  "duplicates": [
+    {
+      "sha256": "87e15f1caf8204c19fc82712f6e5559a67e4521216b84d42d8eaaccfbdc1294d",
+      "kept": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Concrete_jpg_0126.jpg",
+      "excluded": [
+        "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/test/Concrete_jpg_0137.jpg"
+      ],
+      "cross_split": true
+    },
+    {
+      "sha256": "199342c7d5171f5af9304f9b8294353f3139f4354306d4bb39ac81194a527564",
+      "kept": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Concrete_jpg_0141.jpg",
+      "excluded": [
+        "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/val/Concrete_jpg_0136.jpg"
+      ],
+      "cross_split": true
+    },
+    {
+      "sha256": "de2636610aa1dabb3326fbb46830f7fc5d787bea6e784ad49d2908228fd8bdfb",
+      "kept": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Steel_0329.jpg",
+      "excluded": [
+        "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/val/Steel_0330.jpg"
+      ],
+      "cross_split": true
+    },
+    {
+      "sha256": "74008e483d1fcb317304044d1a9d09e747fa1b4b2c5a76a0822484f613c7385b",
+      "kept": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Steel_jpg_0517.jpg",
+      "excluded": [
+        "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Steel_jpg_0520.jpg"
+      ],
+      "cross_split": false
+    },
+    {
+      "sha256": "9fb8ac35d6ec783f712cd8214a636d45c203d2a30871be3eb004665849f3f654",
+      "kept": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Steel_jpg_0518.jpg",
+      "excluded": [
+        "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Steel_jpg_0521.jpg"
+      ],
+      "cross_split": false
+    },
+    {
+      "sha256": "38ba8d72325ba7ba60a18ff6bddd8fec80c8f4e32d015236a6ba27965b4d7424",
+      "kept": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/test/Steel_jpg_0519.jpg",
+      "excluded": [
+        "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/test/Steel_jpg_0522.jpg"
+      ],
+      "cross_split": false
+    }
+  ],
+  "unreadable_or_invalid_records": [
+    {
+      "path": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Concrete_jpg_0640.jpg",
+      "issue": "label: list index out of range"
+    },
+    {
+      "path": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/train/Steel_jpg_1049.jpg",
+      "issue": "label: list index out of range"
+    },
+    {
+      "path": "/Users/hindolomagbity/Documents/Codex/2026-08-22/referenced-chatgpt-conversation-this-is-an/work/data/Material-dataset/images/test/Timber_jpg_0468.jpg",
+      "issue": "label: list index out of range"
+    }
+  ],
+  "image_dimensions": {
+    "min_width": 300,
+    "max_width": 300,
+    "min_height": 300,
+    "max_height": 300
+  }
+}

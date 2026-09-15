@@ -1,0 +1,269 @@
+{
+  "validated_at": "2026-08-24T08:46:10.351221+00:00",
+  "backend_version": "1.0.0-demo",
+  "scope": "local capstone demonstration backend",
+  "checks": {
+    "health_ready": true,
+    "three_models_loaded": true,
+    "factor_catalog_loaded": true,
+    "all_demo_images_processed": true,
+    "concrete_formula_reconciled": true,
+    "unverified_calculation_blocked": true,
+    "unit_mismatch_blocked": true
+  },
+  "demo_image_smoke_test": [
+    {
+      "image": "brick_and_mortar.jpg",
+      "elapsed_seconds": 0.0578,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "brick_and_mortar",
+          "raw_prediction": "brick_and_mortar",
+          "confidence": 0.9086030721664429
+        },
+        "component_type": {
+          "status": "low_confidence",
+          "suggestion": "unable_to_determine",
+          "raw_prediction": "wall",
+          "confidence": 0.3221285045146942
+        },
+        "visible_condition": {
+          "status": "low_confidence",
+          "suggestion": "unable_to_determine",
+          "raw_prediction": "visible_damage_detected",
+          "confidence": 0.5846424102783203
+        }
+      }
+    },
+    {
+      "image": "component_column.jpg",
+      "elapsed_seconds": 0.0391,
+      "suggestions": {
+        "material_type": {
+          "status": "low_confidence",
+          "suggestion": "unable_to_determine",
+          "raw_prediction": "steel",
+          "confidence": 0.5569774508476257
+        },
+        "component_type": {
+          "status": "suggested",
+          "suggestion": "column",
+          "raw_prediction": "column",
+          "confidence": 0.9936819076538086
+        },
+        "visible_condition": {
+          "status": "suggested",
+          "suggestion": "visible_damage_detected",
+          "raw_prediction": "visible_damage_detected",
+          "confidence": 0.9701812267303467
+        }
+      }
+    },
+    {
+      "image": "component_door.jpg",
+      "elapsed_seconds": 0.0367,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "timber",
+          "raw_prediction": "timber",
+          "confidence": 0.9025209546089172
+        },
+        "component_type": {
+          "status": "suggested",
+          "suggestion": "door",
+          "raw_prediction": "door",
+          "confidence": 0.9838285446166992
+        },
+        "visible_condition": {
+          "status": "suggested",
+          "suggestion": "no_visible_damage",
+          "raw_prediction": "no_visible_damage",
+          "confidence": 0.6545771956443787
+        }
+      }
+    },
+    {
+      "image": "component_floor.jpg",
+      "elapsed_seconds": 0.0365,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "steel",
+          "raw_prediction": "steel",
+          "confidence": 0.999190628528595
+        },
+        "component_type": {
+          "status": "suggested",
+          "suggestion": "floor",
+          "raw_prediction": "floor",
+          "confidence": 0.9945753812789917
+        },
+        "visible_condition": {
+          "status": "low_confidence",
+          "suggestion": "unable_to_determine",
+          "raw_prediction": "no_visible_damage",
+          "confidence": 0.5688495635986328
+        }
+      }
+    },
+    {
+      "image": "concrete.jpg",
+      "elapsed_seconds": 0.0322,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "concrete",
+          "raw_prediction": "concrete",
+          "confidence": 0.8944621682167053
+        },
+        "component_type": {
+          "status": "low_confidence",
+          "suggestion": "unable_to_determine",
+          "raw_prediction": "wall",
+          "confidence": 0.5616968870162964
+        },
+        "visible_condition": {
+          "status": "suggested",
+          "suggestion": "no_visible_damage",
+          "raw_prediction": "no_visible_damage",
+          "confidence": 0.8916231393814087
+        }
+      }
+    },
+    {
+      "image": "condition_no_visible_damage.jpg",
+      "elapsed_seconds": 0.0949,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "timber",
+          "raw_prediction": "timber",
+          "confidence": 0.6529093384742737
+        },
+        "component_type": {
+          "status": "suggested",
+          "suggestion": "column",
+          "raw_prediction": "column",
+          "confidence": 0.6196451783180237
+        },
+        "visible_condition": {
+          "status": "suggested",
+          "suggestion": "no_visible_damage",
+          "raw_prediction": "no_visible_damage",
+          "confidence": 0.9998369216918945
+        }
+      }
+    },
+    {
+      "image": "condition_visible_damage.jpg",
+      "elapsed_seconds": 0.0478,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "brick_and_mortar",
+          "raw_prediction": "brick_and_mortar",
+          "confidence": 0.7041650414466858
+        },
+        "component_type": {
+          "status": "low_confidence",
+          "suggestion": "unable_to_determine",
+          "raw_prediction": "ceiling",
+          "confidence": 0.36842453479766846
+        },
+        "visible_condition": {
+          "status": "suggested",
+          "suggestion": "visible_damage_detected",
+          "raw_prediction": "visible_damage_detected",
+          "confidence": 0.9996378421783447
+        }
+      }
+    },
+    {
+      "image": "steel.jpg",
+      "elapsed_seconds": 0.0328,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "steel",
+          "raw_prediction": "steel",
+          "confidence": 0.9167209267616272
+        },
+        "component_type": {
+          "status": "suggested",
+          "suggestion": "floor",
+          "raw_prediction": "floor",
+          "confidence": 0.8382134437561035
+        },
+        "visible_condition": {
+          "status": "suggested",
+          "suggestion": "no_visible_damage",
+          "raw_prediction": "no_visible_damage",
+          "confidence": 0.9747157096862793
+        }
+      }
+    },
+    {
+      "image": "timber.jpg",
+      "elapsed_seconds": 0.0317,
+      "suggestions": {
+        "material_type": {
+          "status": "suggested",
+          "suggestion": "timber",
+          "raw_prediction": "timber",
+          "confidence": 0.9134377837181091
+        },
+        "component_type": {
+          "status": "suggested",
+          "suggestion": "curtain_wall",
+          "raw_prediction": "curtain_wall",
+          "confidence": 0.6131676435470581
+        },
+        "visible_condition": {
+          "status": "suggested",
+          "suggestion": "visible_damage_detected",
+          "raw_prediction": "visible_damage_detected",
+          "confidence": 0.9940909743309021
+        }
+      }
+    }
+  ],
+  "assessment_boundary": "A1-A3 product stage only",
+  "concrete_assessment_scenario": {
+    "assessment_id": "d833b3e4-1b27-48b4-bb15-3b751aa774da",
+    "created_at": "2026-08-24T08:46:10.770630+00:00",
+    "analysis_id": "04e00d09-8f62-4b4a-93f5-e7f3130f46f6",
+    "verified_fields": {
+      "material_type": "concrete",
+      "component_type": "column",
+      "visible_condition": "no_visible_damage",
+      "verified_by_human": true
+    },
+    "assessment_boundary": "A1-A3 product stage only",
+    "quantity": 5.0,
+    "unit": "m3",
+    "factor": {
+      "factor_id": "demo-concrete-a1a3-001",
+      "material_type": "concrete",
+      "component_type": null,
+      "factor_value_kgco2e": 288.0,
+      "denominator_unit": "m3",
+      "lifecycle_modules": "A1-A3",
+      "geographic_scope": "Prototype reference; geography not specified",
+      "source_title": "Environmental Product Declarations (EPD) - Lifecycle Approach (V2)",
+      "source_location": "Section 4.1, page 5",
+      "source_type": "internal_prototype_reference",
+      "status": "approved_for_demo",
+      "product_specific": false,
+      "note": "Illustrative generic factor for the capstone demonstration; not a product-specific certified EPD."
+    },
+    "formula": "verified_quantity * a1_a3_factor",
+    "calculation": "5 m3 * 288 kg CO2e/m3",
+    "estimated_potential_avoided_a1_a3_kgco2e": 1440.0,
+    "result_status": "screening_estimate",
+    "claim": "Estimated potential avoided new-material product-stage impact; not confirmed carbon saved.",
+    "verification_required": false
+  },
+  "all_checks_passed": true
+}

@@ -1,0 +1,67 @@
+{
+  "task": "visible_condition",
+  "model": "MobileNetV3-Small transfer learning",
+  "classes": [
+    "no_visible_damage",
+    "visible_damage_detected"
+  ],
+  "split_counts": {
+    "train": 1101,
+    "val": 154,
+    "test": 219
+  },
+  "training_class_counts": {
+    "no_visible_damage": 152,
+    "visible_damage_detected": 949
+  },
+  "best_epoch": 6,
+  "training_seconds": 995.0959086418152,
+  "device": "cpu",
+  "temperature": 0.5673239231109619,
+  "test": {
+    "accuracy": 0.9178082191780822,
+    "balanced_accuracy": 0.8602035687358633,
+    "macro_precision": 0.8855932203389831,
+    "macro_recall": 0.8602035687358633,
+    "macro_f1": 0.872012987012987,
+    "log_loss": 0.21385806265333931,
+    "expected_calibration_error": 0.03353189578339388,
+    "confusion_matrix": [
+      [
+        35,
+        11
+      ],
+      [
+        7,
+        166
+      ]
+    ],
+    "classification_report": {
+      "no_visible_damage": {
+        "precision": 0.8333333333333334,
+        "recall": 0.7608695652173914,
+        "f1-score": 0.7954545454545454,
+        "support": 46.0
+      },
+      "visible_damage_detected": {
+        "precision": 0.9378531073446328,
+        "recall": 0.9595375722543352,
+        "f1-score": 0.9485714285714286,
+        "support": 173.0
+      },
+      "accuracy": 0.9178082191780822,
+      "macro avg": {
+        "precision": 0.8855932203389831,
+        "recall": 0.8602035687358633,
+        "f1-score": 0.872012987012987,
+        "support": 219.0
+      },
+      "weighted avg": {
+        "precision": 0.9158991822098393,
+        "recall": 0.9178082191780822,
+        "f1-score": 0.9164098914783847,
+        "support": 219.0
+      }
+    }
+  }
+}

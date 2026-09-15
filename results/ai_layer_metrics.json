@@ -1,0 +1,30 @@
+{
+  "evaluation_scope": "held-out source-dataset test images",
+  "human_verification_required": true,
+  "models": {
+    "material_type": {
+      "source_dataset": "Material-dataset",
+      "test_images": 678,
+      "accuracy": 0.9749262536873157,
+      "balanced_accuracy": 0.9749107058523985,
+      "macro_f1": 0.9748558044486904,
+      "expected_calibration_error": 0.012264752282505507
+    },
+    "component_type": {
+      "source_dataset": "HBD",
+      "test_instances": 3269,
+      "accuracy": 0.6185377791373509,
+      "balanced_accuracy": 0.709122353045144,
+      "macro_f1": 0.551859330056052,
+      "expected_calibration_error": 0.04278781732020665
+    },
+    "visible_condition": {
+      "source_dataset": "dacl1k",
+      "test_images": 219,
+      "accuracy": 0.9178082191780822,
+      "balanced_accuracy": 0.8602035687358633,
+      "macro_f1": 0.872012987012987,
+      "expected_calibration_error": 0.03353189578339388
+    }
+  }
+}
